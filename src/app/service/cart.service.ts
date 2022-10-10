@@ -1,15 +1,16 @@
-import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { CartItemArgs } from '../model/cartItemargs';
 import { IProduct } from '../model/IProduct';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
-export class ProductService {
-    productList: IProduct[];
+export class CartService {
+
+    cart: IProduct[]
+
+
     constructor() {
-        this.productList = [
+        this.cart = [
             { id: 100, name: 'LenovoThinkpad laptop', price: 100000000, qty: 1, img: 'https://fakeimg.pl/200x100', categoryId: 1 },
             { id: 200, name: 'Apple MacBook laptop', price: 2007780, qty: 0, img: 'https://fakeimg.pl/200x100', categoryId: 1 },
             { id: 300, name: 'Lenovo Tab 2', price: 3000, qty: 10, img: 'https://fakeimg.pl/200x100', categoryId: 2 },
@@ -20,32 +21,5 @@ export class ProductService {
             { id: 800, name: 'tochiba Utlra', price: 60000, qty: 14, img: 'https://fakeimg.pl/200x100', categoryId: 4 },
             { id: 900, name: 'ththt Utlra', price: 60, qty: 0, img: 'https://fakeimg.pl/200x100', categoryId: 4 },
         ]
-
-
     }
-    getAll(): IProduct[] {
-        return this.productList
-    }
-    getOneByID(id: number): IProduct | null {
-        let found = this.productList.find(item => item.id == id)
-        if (found)
-            return found
-        else
-            return null;
-    }
-    filtterByCategoryId(id: number) {
-        if (id == 0)
-            return this.productList;
-        return this.productList.filter(item => item.categoryId == id);
-
-    }
-    AdditemtoCart(cartItemargs: CartItemArgs) {
-        this.productList.forEach(element => {
-            if (element.id == cartItemargs.id)
-                element.qty -= cartItemargs.qty
-        });
-
-    }
-
 }
-
