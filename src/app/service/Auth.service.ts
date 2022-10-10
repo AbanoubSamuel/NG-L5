@@ -10,11 +10,11 @@ import { APIResponse } from '../ViewModel/Apiresult';
 })
 export class AuthService {
     logged: BehaviorSubject<boolean>
-    role: BehaviorSubject<boolean>
+    // role: BehaviorSubject<boolean>
     constructor(private http: HttpClient) {
         this.logged = new BehaviorSubject<boolean>(this.isLogged())
         // this.setLoggedStatus(this.isLogged())
-        this.role = new BehaviorSubject<boolean>(this.isAdmin())
+        // this.role = new BehaviorSubject<boolean>(this.checkRole())
     }
     setLoggedStatus(status: boolean) {
         this.logged.next(status)
@@ -39,8 +39,12 @@ export class AuthService {
         return this.http.post(`${environment.APIURl}/User/logout`, {}, options)
     }
     isLogged(): boolean {
-        if (localStorage.getItem("token") == null) return false
-        else return true
+        if (localStorage.getItem("token") == null && localStorage.getItem("isAdmin") == null && "false")
+            return false
+        else {
+            console.log(localStorage.getItem("isAdmin"));
+            return true
+        }
     }
 
     setToken(token: string) {
@@ -57,6 +61,11 @@ export class AuthService {
         let stringRole = role.toString()
         localStorage.setItem("isAdmin", stringRole)
     }
+
+    // checkRole() {
+        
+    //     else return true
+    // }
 
 
 }
